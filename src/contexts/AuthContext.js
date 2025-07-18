@@ -24,12 +24,24 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, displayName) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(userCredential.user, { displayName });
+    
+    if (displayName) {
+      await updateProfile(userCredential.user, { displayName });
+    }
+    
     return userCredential;
   };
 
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const login = async (email, password) => {
+    try {
+      console.log('Attempting to login with email:', email);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Login successful:', userCredential.user.uid);
+      return userCredential;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   };
 
   const logout = () => {
@@ -37,7 +49,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    console.log('Setting up auth state listener');
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('Auth state changed:', user ? `User logged in: ${user.uid}` : 'User logged out');
       setCurrentUser(user);
       setLoading(false);
     });

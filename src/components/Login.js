@@ -30,6 +30,7 @@ const Login = ({ onSwitchToSignup }) => {
   };
 
   const getErrorMessage = (errorCode) => {
+    console.log('Login error code:', errorCode);
     switch (errorCode) {
       case 'auth/user-not-found':
         return 'No account found with this email address';
@@ -39,8 +40,14 @@ const Login = ({ onSwitchToSignup }) => {
         return 'Invalid email address';
       case 'auth/too-many-requests':
         return 'Too many failed attempts. Please try again later';
+      case 'auth/operation-not-allowed':
+        return 'Email/password accounts are not enabled. Please contact support.';
+      case 'auth/network-request-failed':
+        return 'Network error. Please check your internet connection.';
+      case 'auth/invalid-credential':
+        return 'Invalid email or password. Please check your credentials.';
       default:
-        return 'Failed to log in. Please try again';
+        return `Failed to log in: ${errorCode || 'Unknown error'}. Please try again.`;
     }
   };
 

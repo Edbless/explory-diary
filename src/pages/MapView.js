@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, getDocs, where } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
 import { format } from 'date-fns';
 import L from 'leaflet';
 
@@ -14,18 +15,24 @@ L.Icon.Default.mergeOptions({
 });
 
 const MapView = () => {
+  const { currentUser } = useAuth();
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mapCenter, setMapCenter] = useState([40.7128, -74.0060]); // Default to NYC
   const [mapZoom, setMapZoom] = useState(2);
 
   useEffect(() => {
-    fetchEntries();
-  }, []);
+    if (currentUser) {
+      fetchEntries();
+    }
+  }, [currentUser]);
 
   const fetchEntries = async () => {
     try {
-      const q = query(collection(db, 'entries'));
+      const q = query(
+        collection(db, 'entries'),
+        where('userId', '==', currentUser.uid)
+      );
       const querySnapshot = await getDocs(q);
       const entriesData = querySnapshot.docs.map(doc => ({
         id: doc.id,

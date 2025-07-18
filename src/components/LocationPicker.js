@@ -18,17 +18,34 @@ const LocationPicker = ({ onLocationSelect, initialLocation }) => {
     }
 
     setIsGettingLocation(true);
+    
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 60000
+    };
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        const { latitude, longitude } = position.coords;
+        const { latitude, longitude, accuracy } = position.coords;
+        console.log(`Location found: ${latitude}, ${longitude} (accuracy: ${accuracy}m)`);
         
         try {
-          // Reverse geocoding to get address
-          const response = await fetch(
-            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=657e5cf3f27e4f7a889ec726ca168463`
-          );
-          const data = await response.json();
-          const address = data.results[0]?.formatted || `${latitude}, ${longitude}`;
+          // Try multiple geocoding services
+          let address = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
+          
+          try {
+            // First try OpenCage
+            const response = await fetch(
+              `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=657e5cf3f27e4f7a889ec726ca168463&limit=1`
+            );
+            const data = await response.json();
+            if (data.results && data.results.length > 0) {
+              address = data.results[0].formatted;
+            }
+          } catch (geocodeError) {
+            console.warn('Geocoding failed, using coordinates:', geocodeError);
+          }
           
           setLocation({
             lat: latitude,
@@ -36,21 +53,39 @@ const LocationPicker = ({ onLocationSelect, initialLocation }) => {
             address: address
           });
         } catch (error) {
-          console.error('Error getting address:', error);
+          console.error('Error processing location:', error);
           setLocation({
             lat: latitude,
             lng: longitude,
-            address: `${latitude}, ${longitude}`
+            address: `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`
           });
         }
         
         setIsGettingLocation(false);
       },
       (error) => {
-        console.error('Error getting location:', error);
-        alert('Unable to retrieve your location. Please enter manually.');
+        console.error('Geolocation error:', error);
         setIsGettingLocation(false);
-      }
+        
+        let errorMessage = 'Unable to get your location. ';
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage += 'Please allow location access in your browser settings.';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage += 'Location information is unavailable.';
+            break;
+          case error.TIMEOUT:
+            errorMessage += 'Location request timed out.';
+            break;
+          default:
+            errorMessage += 'An unknown error occurred.';
+            break;
+        }
+        
+        alert(errorMessage + ' You can enter the location manually.');
+      },
+      options
     );
   };
 

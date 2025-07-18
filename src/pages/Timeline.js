@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect, useCallback } from 'react';
+import { collection, query, orderBy, getDocs, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import { format } from 'date-fns';
+import { useAuth } from '../contexts/AuthContext';
 import EntryCard from '../components/EntryCard';
 import SearchFilter from '../components/SearchFilter';
 import ExportButton from '../components/ExportButton';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const Timeline = () => {
+  const { currentUser } = useAuth();
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' for newest first, 'asc' for oldest first
 
-  useEffect(() => {
-    fetchEntries();
-  }, [sortOrder]);
-
-  const fetchEntries = async () => {
+  const fetchEntries = useCallback(async () => {
+    if (!currentUser) return;
+    
     setLoading(true);
     try {
       const q = query(
         collection(db, 'entries'),
+        where('userId', '==', currentUser.uid),
         orderBy('date', sortOrder)
       );
       const querySnapshot = await getDocs(q);
@@ -36,7 +36,11 @@ const Timeline = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser, sortOrder]);
+
+  useEffect(() => {
+    fetchEntries();
+  }, [fetchEntries]);
 
   const toggleSortOrder = () => {
     setSortOrder(prev => prev === 'desc' ? 'asc' : 'desc');

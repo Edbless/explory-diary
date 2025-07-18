@@ -70,12 +70,15 @@ const Navigation = () => {
             Map View
           </Link>
           
-          {currentUser && (
+          {currentUser ? (
             <div className="nav-user-section">
-              <span className="nav-user-info">
+              <div className="nav-user-info">
                 <User size={16} />
-                <span className="hidden-mobile">{currentUser.displayName || currentUser.email}</span>
-              </span>
+                <span className="user-name">
+                  {currentUser.displayName || currentUser.email?.split('@')[0] || 'User'}
+                </span>
+                <span className="user-status">● Online</span>
+              </div>
               <button 
                 onClick={handleLogout}
                 className="nav-link logout-btn"
@@ -97,6 +100,12 @@ const Navigation = () => {
                 <LogOut size={16} />
                 <span>Logout</span>
               </button>
+            </div>
+          ) : (
+            <div className="nav-auth-status">
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+                Not authenticated
+              </span>
             </div>
           )}
         </div>

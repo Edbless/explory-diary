@@ -50,8 +50,11 @@ const Signup = ({ onSwitchToLogin }) => {
     try {
       setError('');
       setLoading(true);
+      console.log('Submitting signup form with:', { email: formData.email, displayName: formData.displayName });
       await signup(formData.email, formData.password, formData.displayName);
+      console.log('Signup successful!');
     } catch (error) {
+      console.error('Signup failed:', error);
       setError(getErrorMessage(error.code));
     } finally {
       setLoading(false);
@@ -59,15 +62,20 @@ const Signup = ({ onSwitchToLogin }) => {
   };
 
   const getErrorMessage = (errorCode) => {
+    console.log('Error code received:', errorCode);
     switch (errorCode) {
       case 'auth/email-already-in-use':
         return 'An account with this email already exists';
       case 'auth/invalid-email':
         return 'Invalid email address';
       case 'auth/weak-password':
-        return 'Password is too weak';
+        return 'Password is too weak (minimum 6 characters required)';
+      case 'auth/operation-not-allowed':
+        return 'Email/password accounts are not enabled. Please contact support.';
+      case 'auth/network-request-failed':
+        return 'Network error. Please check your internet connection.';
       default:
-        return 'Failed to create account. Please try again';
+        return `Failed to create account: ${errorCode || 'Unknown error'}. Please try again.`;
     }
   };
 
