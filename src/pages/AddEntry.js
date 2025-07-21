@@ -5,7 +5,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { uploadToImgBB } from '../utils/imgbbUpload';
 import LocationPicker from '../components/LocationPicker';
 import ImageUpload from '../components/ImageUpload';
-import ImageUploadTest from '../components/ImageUploadTest';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Save } from 'lucide-react';
 
@@ -182,78 +181,74 @@ const AddEntry = () => {
   };
 
   return (
-    <div>
-      <ImageUploadTest />
-      
-      <div className="card">
-        <h1>Add New Adventure</h1>
+    <div className="card">
+      <h1>Add New Adventure</h1>
         
-        {message && (
-          <div className={message.includes('Error') || message.includes('Failed') ? 'error' : 'success'}>
-            {message}
-          </div>
-        )}
+      {message && (
+        <div className={message.includes('Error') || message.includes('Failed') ? 'error' : 'success'}>
+          {message}
+        </div>
+      )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="title">Title *</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleInputChange}
-              placeholder="Give your adventure a title..."
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="date">Date</label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={formData.date}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <LocationPicker 
-            onLocationSelect={handleLocationSelect}
-            initialLocation={formData.location}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title *</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            placeholder="Give your adventure a title..."
+            required
           />
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="story">Your Story *</label>
-            <textarea
-              id="story"
-              name="story"
-              value={formData.story}
-              onChange={handleInputChange}
-              placeholder="Tell us about your adventure..."
-              rows="6"
-              required
-            />
-          </div>
-
-          <ImageUpload
-            onImageSelect={handleImageSelect}
-            currentImage={imagePreview}
-            onImageRemove={handleImageRemove}
+        <div className="form-group">
+          <label htmlFor="date">Date</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleInputChange}
           />
+        </div>
 
-          <button 
-            type="submit" 
-            className="btn btn-primary"
-            disabled={loading}
-            style={{ display: 'flex', alignItems: 'center', gap: '5px', width: '100%', justifyContent: 'center' }}
-          >
-            <Save size={20} />
-            {loading ? 'Saving...' : 'Save Adventure'}
-          </button>
-        </form>
-      </div>
+        <LocationPicker 
+          onLocationSelect={handleLocationSelect}
+          initialLocation={formData.location}
+        />
+
+        <div className="form-group">
+          <label htmlFor="story">Your Story *</label>
+          <textarea
+            id="story"
+            name="story"
+            value={formData.story}
+            onChange={handleInputChange}
+            placeholder="Tell us about your adventure..."
+            rows="6"
+            required
+          />
+        </div>
+
+        <ImageUpload
+          onImageSelect={handleImageSelect}
+          currentImage={imagePreview}
+          onImageRemove={handleImageRemove}
+        />
+
+        <button 
+          type="submit" 
+          className="btn btn-primary"
+          disabled={loading}
+          style={{ display: 'flex', alignItems: 'center', gap: '5px', width: '100%', justifyContent: 'center' }}
+        >
+          <Save size={20} />
+          {loading ? 'Saving...' : 'Save Adventure'}
+        </button>
+      </form>
     </div>
   );
 };

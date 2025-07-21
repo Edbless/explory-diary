@@ -1526,4 +1526,438 @@ select:focus {
     justify-content: center;
     margin: 0.5rem 0;
   }
+}/
+* Final Mobile Optimizations for Production */
+
+/* Improved mobile form handling */
+@media (max-width: 768px) {
+  /* Better form spacing on mobile */
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Larger touch targets for mobile */
+  .form-group input,
+  .form-group textarea {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: var(--radius-lg);
+    min-height: 48px; /* Minimum touch target size */
+  }
+  
+  .form-group textarea {
+    min-height: 120px;
+  }
+  
+  /* Better button sizing for mobile */
+  .btn {
+    min-height: 48px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  /* Improved image upload area for mobile */
+  .image-upload-area {
+    padding: 2rem 1rem;
+    min-height: 120px;
+  }
+  
+  /* Better message display on mobile */
+  .success, .error {
+    padding: 1rem;
+    font-size: 0.9rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Extra small screens (phones in portrait) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+  
+  .card {
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+  }
+  
+  h3 {
+    font-size: 1.125rem;
+  }
+  
+  /* Compact navigation for small screens */
+  .nav-brand {
+    font-size: 1.25rem;
+  }
+  
+  .nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Better timeline display on mobile */
+  .timeline-item {
+    padding-left: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .timeline-item::before {
+    left: -8px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .container {
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .card {
+    padding: 1.5rem 2rem;
+  }
+  
+  /* Adjust map height for landscape */
+  .map-container {
+    height: 350px;
+  }
+}
+
+/* PWA and mobile app optimizations */
+@media (display-mode: standalone) {
+  /* When app is installed as PWA */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .nav {
+    padding-top: max(15px, env(safe-area-inset-top));
+  }
+}
+
+/* High DPI displays (Retina, etc.) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .btn {
+    border: none;
+  }
+  
+  .card {
+    border-width: 0.5px;
+  }
+  
+  /* Sharper icons on high DPI */
+  svg {
+    shape-rendering: geometricPrecision;
+  }
+}
+
+/* Improved accessibility for mobile */
+@media (max-width: 768px) {
+  /* Larger focus indicators */
+  .btn:focus,
+  input:focus,
+  textarea:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  /* Better contrast for small screens */
+  .text-secondary {
+    color: #4b5563;
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  /* Reduce animations on mobile for better performance */
+  .card:hover {
+    transform: none;
+  }
+  
+  .btn:hover::before {
+    display: none;
+  }
+  
+  /* Optimize image loading */
+  .entry-image,
+  .responsive-img {
+    image-rendering: optimizeQuality;
+  }
+}
+
+/* Dark mode support for mobile users */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  /* This can be enabled if you want dark mode support
+  :root {
+    --bg-primary: #1f2937;
+    --bg-secondary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #4b5563;
+  }
+  */
+}
+
+/* Improved loading states for mobile */
+@media (max-width: 768px) {
+  .loading {
+    padding: 2rem 1rem;
+    font-size: 1rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Better error handling display on mobile */
+@media (max-width: 768px) {
+  .error {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--danger-color);
+  }
+  
+  .success {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--success-color);
+  }
+}/* Fin
+al Mobile Optimizations for Production */
+
+/* Improved mobile form handling */
+@media (max-width: 768px) {
+  /* Better form spacing on mobile */
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Larger touch targets for mobile */
+  .form-group input,
+  .form-group textarea {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: var(--radius-lg);
+    min-height: 48px; /* Minimum touch target size */
+  }
+  
+  .form-group textarea {
+    min-height: 120px;
+  }
+  
+  /* Better button sizing for mobile */
+  .btn {
+    min-height: 48px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  /* Improved image upload area for mobile */
+  .image-upload-area {
+    padding: 2rem 1rem;
+    min-height: 120px;
+  }
+  
+  /* Better message display on mobile */
+  .success, .error {
+    padding: 1rem;
+    font-size: 0.9rem;
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Extra small screens (phones in portrait) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+  
+  .card {
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+  }
+  
+  h3 {
+    font-size: 1.125rem;
+  }
+  
+  /* Compact navigation for small screens */
+  .nav-brand {
+    font-size: 1.25rem;
+  }
+  
+  .nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Better timeline display on mobile */
+  .timeline-item {
+    padding-left: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .timeline-item::before {
+    left: -8px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .container {
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .card {
+    padding: 1.5rem 2rem;
+  }
+  
+  /* Adjust map height for landscape */
+  .map-container {
+    height: 350px;
+  }
+}
+
+/* PWA and mobile app optimizations */
+@media (display-mode: standalone) {
+  /* When app is installed as PWA */
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .nav {
+    padding-top: max(15px, env(safe-area-inset-top));
+  }
+}
+
+/* High DPI displays (Retina, etc.) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .btn {
+    border: none;
+  }
+  
+  .card {
+    border-width: 0.5px;
+  }
+  
+  /* Sharper icons on high DPI */
+  svg {
+    shape-rendering: geometricPrecision;
+  }
+}
+
+/* Improved accessibility for mobile */
+@media (max-width: 768px) {
+  /* Larger focus indicators */
+  .btn:focus,
+  input:focus,
+  textarea:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  /* Better contrast for small screens */
+  .text-secondary {
+    color: #4b5563;
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  /* Reduce animations on mobile for better performance */
+  .card:hover {
+    transform: none;
+  }
+  
+  .btn:hover::before {
+    display: none;
+  }
+  
+  /* Optimize image loading */
+  .entry-image,
+  .responsive-img {
+    image-rendering: optimizeQuality;
+  }
+}
+
+/* Dark mode support for mobile users */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  /* This can be enabled if you want dark mode support
+  :root {
+    --bg-primary: #1f2937;
+    --bg-secondary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #4b5563;
+  }
+  */
+}
+
+/* Improved loading states for mobile */
+@media (max-width: 768px) {
+  .loading {
+    padding: 2rem 1rem;
+    font-size: 1rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Better error handling display on mobile */
+@media (max-width: 768px) {
+  .error {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--danger-color);
+  }
+  
+  .success {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--success-color);
+  }
 }
